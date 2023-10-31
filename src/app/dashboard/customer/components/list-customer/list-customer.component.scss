@@ -1,0 +1,73 @@
+button {
+    color: #FFF;
+    margin: 0 5px;
+    &.addService {
+        background-color: #63e38a!important;
+        // rgb(28, 146, 28)!important;
+        color: #fff;
+        padding: 2px 23px;
+        font-size: 20px;
+    }
+}
+
+table {
+    width: 100%;
+    margin: 20px auto;
+  }
+  :host ::ng-deep {
+    table {
+        thead {
+            // #10bca5
+            background-color: rgb(126, 128, 126)!important;
+
+            .mat-header-cell {
+                color: #FFF;
+            }
+        }
+    }
+}
+button{
+    transition: all .4s;
+    border-radius: 13px;
+}
+button:hover{
+    border-radius: 30px;
+}
+th{
+    font-size: 16px;
+    font-weight: 500;
+}
+  .active{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(0,255,0,.9);
+  }
+  .disactive{
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255,0,0,.9);
+  }
+  form{
+    width: 70%;
+    margin: auto;
+  }
+  @media only screen and (max-width: 993px) {
+    table {
+        // width: 90%;
+        // margin: 20px auto;
+      }
+      bottom{
+          margin: 5px 5px;
+      } 
+      form{
+        width: 90%;
+      }
+  }
+  .mat-row:hover .mat-cell{
+    background-color: #fff5a2;
+}
+.scrollable-dialog {
+  max-height: 400px; /* Adjust the height according to your needs */
+  overflow-y: auto;
+}
