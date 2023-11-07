@@ -1,4 +1,7 @@
 <div class="container">
+    <div class="row my-3 mx-0">
+        <h2 class="text-info">Balance sheet</h2>
+    </div>
     <div class="row">
         <table class="table table-bordered " style="min-width: 670px;">
             <thead class="thead-dark">
@@ -13,7 +16,7 @@
                 </tr>
                 <tr>
                     <td scope="row">Cash</td>
-                    <td>{{ 2154 | currency:' AED '}}</td>
+                    <td>{{ cash | currency:' AED '}}</td>
                 </tr>
                 <tr *ngFor="let supplier of suppliers">
                     <td scope="row">{{supplier.name}}</td>
@@ -28,7 +31,7 @@
                                 <td style="padding-left: 0px !important;" >{{sumBalance | currency:' AED '}}</td>
                                 <div class="bg-dark font-weight-bolder text-info">
                                     <td style="border-right: 2px solid #fff;">Total</td>
-                                    <td  >{{assets + sumBalance  |currency:' AED '}}</td>
+                                    <td  >{{assets + sumBalance + cash |currency:' AED '}}</td>
                                 </div>
                             </tr>
                         </table>
@@ -87,7 +90,7 @@
                                 <td>Sum( Liabilities&&Owner Equity ) </td>
                             </tr>
                             <tr class="">
-                                <td>{{assets + sumBalance |currency:' AED '}}</td>
+                                <td>{{assets + sumBalance + cash |currency:' AED '}}</td>
                                 <td>{{sumCommission + sumDeposit + totalProfie-expenses+sumCapital - sumDrawing | currency : ' AED '}} </td>
                             </tr>
                         </table>
@@ -95,7 +98,7 @@
                 </tr>
                 <th scope="col" class="text-center bg-dark text-white" colspan="2">Correct Mistakes</th>
                 <tr>
-                    <td scope="row" colspan="2" class="text-center font-weight-bolder" style="font-size: 24px;">{{(assets + sumBalance)-(sumCommission + sumDeposit + totalProfie-expenses+sumCapital - sumDrawing) | currency : ' AED '}}</td>
+                    <td scope="row" colspan="2" class="text-center font-weight-bolder" style="font-size: 24px;">{{(assets +cash  + sumBalance)-(sumCommission + sumDeposit + totalProfie-expenses+sumCapital - sumDrawing) | currency : ' AED '}}</td>
                 </tr>
             </tbody>
         </table>

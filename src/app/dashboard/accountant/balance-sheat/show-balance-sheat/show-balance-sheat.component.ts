@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, forkJoin, map, of } from 'rxjs';
+import { Component} from '@angular/core';
+import {  catchError, forkJoin, map, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { BanksService } from 'src/app/dashboard/banks/banks.service';
 import { OwnerService } from 'src/app/dashboard/owners/components/service/owner.service';
@@ -11,7 +11,7 @@ import { TransactionsService } from 'src/app/dashboard/transactions/transactions
   templateUrl: './show-balance-sheat.component.html',
   styleUrls: ['./show-balance-sheat.component.scss']
 })
-export class ShowBalanceSheatComponent implements OnInit {
+export class ShowBalanceSheatComponent  {
   banks:any=[] ;
   suppliers:any=[];
   sumDeposit:any=0 ;
@@ -22,6 +22,11 @@ export class ShowBalanceSheatComponent implements OnInit {
   totalProfie :any=0 ;
   assets :any=0 ;
   expenses :any=0 ;
+  cash :any=0 ;
+  paymentAmount :any= 0;
+  sumBanksBalance :any= 0;
+  sumBalanceSupplier :any= 0;
+  total_price_without_profite :any= 0;
 
   constructor(
     private _BanksService:BanksService ,
@@ -29,19 +34,20 @@ export class ShowBalanceSheatComponent implements OnInit {
     private _AuthService:AuthService ,
     private _OwnerService:OwnerService ,
     private _TransactionsService:TransactionsService
-  ) {
-    // this.getAllbanks() ;
-    // this.getAllSuppliers() ;
-    this.getSumDeposites() ;
+  ) { 
     this.getSumBalance() ;
-    this.getCapitalAndOwnerDrawing() ;
-    this.calculateAssets();
-    this.getExpensesSum()
-   }
+  }
 
-  ngOnInit(): void {
-    console.log(this.assets);
-    
+  calculateCash() {
+    this.cash =
+      this.paymentAmount +
+      this.sumDeposit +
+      this.sumCapital -
+      this.sumDrawing -
+      this.expenses -
+      this.total_price_without_profite -
+      this.sumBalanceSupplier -
+      this.sumBanksBalance;
   }
 
 
@@ -49,13 +55,10 @@ export class ShowBalanceSheatComponent implements OnInit {
     return this._BanksService.getAllBanks().pipe(
       map((res) => {
         this.banks = res.result.rows;
-        let sumBanksBalance = 0;
-
         for (let index = 0; index < this.banks.length; index++) {
-          sumBanksBalance += this.banks[index].balance;
+          this.sumBanksBalance += this.banks[index].balance;
         }
-
-        return sumBanksBalance;
+        return this.sumBanksBalance;
       }),
       catchError((err) => {
         console.log(err);
@@ -68,13 +71,10 @@ export class ShowBalanceSheatComponent implements OnInit {
     return this._SppliersService.getAllSuppliers().pipe(
       map((res) => {
         this.suppliers = res.result.rows;
-        let sumBalanceSupplier = 0;
-
         for (let index = 0; index < this.suppliers.length; index++) {
-          sumBalanceSupplier += this.suppliers[index].balance;
+          this.sumBalanceSupplier += this.suppliers[index].balance;
         }
-
-        return sumBalanceSupplier;
+        return this.sumBalanceSupplier;
       }),
       catchError((err) => {
         console.log(err);
@@ -84,97 +84,64 @@ export class ShowBalanceSheatComponent implements OnInit {
   }
 
   calculateAssets() {
-    forkJoin([this.getAllbanks(), this.getAllSuppliers()]).subscribe(([banksBalance, suppliersBalance]) => {
+    forkJoin([this.getAllbanks(), this.getAllSuppliers() ,this.getSumDeposites() ,]).subscribe(([banksBalance, suppliersBalance , sumDeposit ]) => {
       this.assets = banksBalance + suppliersBalance;
-      console.log("assets = ",this.assets);
+      console.log("assets = ",this.assets,"sumDeposit",sumDeposit);
       
     });
   }
 
-  getSumDeposites(){
-    this._AuthService.getSumDeposit().subscribe({
-      next : (res)=>{
+
+  getSumDeposites() {
+    return this._AuthService.getSumDeposit().pipe(
+      map((res) => {
         this.sumDeposit=res.result.sumDeposite ;
-        console.log("sumDeposit = ",this.sumDeposit);
-        
-      }
-    })
+        return this.sumDeposit;
+      }),
+      catchError((err) => {
+        console.log(err);
+        return of(0); // Return an observable with a default value
+      })
+    );
   }
 
   getSumBalance(){
-    this._AuthService.getSumBalance().subscribe({
-      next : (res)=>{
-        this.sumBalance=res.result.sumBalanceCustomers ;
-        this.sumCommission=res.result.sumCommission ;
-        this.totalProfie=res.result.totalProfit
-        console.log("sumBalance ,sumCommission , totalProfie = ",res );
-        
-      }
-    })
+    // calc sum assets
+    this.calculateAssets()
+    // calc sum  total_price_without_profite , totalProfie 
+      this._AuthService.getSumBalance().subscribe({
+        next : (res)=>{
+          this.sumBalance=res.result.sumBalanceCustomers ;
+          this.sumCommission=res.result.sumCommission ;
+          this.paymentAmount = +res.result.totalPayment
+          this.totalProfie=res.result.totalProfit ;
+          this.total_price_without_profite = res.result.total_price_without_profite ;
+          console.log("sumBalance ,sumCommission , totalProfie = ",res );
+
+          this._OwnerService.getCapitalAndOwnerDrawing().subscribe({
+            next : (res)=>{
+              this.sumDrawing=res.result.drowingSum ;
+              this.sumCapital=res.result.investSum ;
+              console.log(res);
+              this._TransactionsService.getExpensesSum().subscribe({
+                next : (res)=>{
+                  console.log( 'expensesSum ',res.expensesSum);
+                  this.expenses=res.expensesSum ;
+                  // calc cash
+                  this.cash = (this.paymentAmount + this.sumDeposit + this.sumCapital) - ( this.sumDrawing + this.expenses + this.total_price_without_profite   +this.sumBalanceSupplier + this.sumBanksBalance  )
+                },
+                error :(err)=>{
+                  console.log(err);
+                  
+                }
+              })
+            } ,
+            error : (err)=>{
+              console.log(err);
+            }
+          })
+        }
+      })
   }
 
-  getCapitalAndOwnerDrawing(){
-    this._OwnerService.getCapitalAndOwnerDrawing().subscribe({
-      next : (res)=>{
-        this.sumDrawing=res.result.drowingSum ;
-        this.sumCapital=res.result.investSum ;
-        console.log(res);
-        
-      } ,
-      error : (err)=>{
-        console.log(err);
-      }
-    })
-  }
-
-  getExpensesSum(){
-    this._TransactionsService.getExpensesSum().subscribe({
-      next : (res)=>{
-        console.log( 'expensesSum ',res.expensesSum);
-        this.expenses=res.expensesSum
-      },
-      error :(err)=>{
-        console.log(err);
-        
-      }
-    })
-  }
-  // getAllbanks():number{
-  //   let sumBanksBalance =0
-  //   this._BanksService.getAllBanks().subscribe({
-  //     next:(res)=>{
-  //       this.banks=res.result.rows ;
-
-  //       for (let index = 0; index < this.banks.length; index++) {
-  //         sumBanksBalance += this.banks[index].balance
-          
-  //       }
-  //       console.log(this.banks);
-  //       return sumBanksBalance ;
-  //     },
-  //     error:(err)=>{
-  //       console.log(err);
-  //       return  0 ;
-  //     }
-  //   })
-  // }
-  
-
-  // getAllSuppliers(){
-  //   let sumBalanceSupplier = 0 ;
-  //   this._SppliersService.getAllSuppliers().subscribe({
-  //     next:(res)=>{
-  //       this.suppliers=res.result.rows ;
-  //       console.log(this.suppliers);
-  //       for (let index = 0; index < this.suppliers.length; index++) {
-  //         sumBalanceSupplier += this.suppliers[index].balance
-  //       }
-  //       return sumBalanceSupplier ;
-  //     },
-  //     error:(err)=>{
-  //       console.log(err);
-  //       return  0 ;
-  //     }
-  //   })
-  // }
 }
