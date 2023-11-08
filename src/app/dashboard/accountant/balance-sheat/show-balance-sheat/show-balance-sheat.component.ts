@@ -17,6 +17,7 @@ export class ShowBalanceSheatComponent  {
   sumDeposit:any=0 ;
   sumBalance:any=0 ;
   sumCommission:any=0 ;
+  sumCommissionPaied:any= 0;
   sumCapital:any=0 ;
   sumDrawing :any=0 ;
   totalProfie :any=0 ;
@@ -113,22 +114,24 @@ export class ShowBalanceSheatComponent  {
         next : (res)=>{
           this.sumBalance=res.result.sumBalanceCustomers ;
           this.sumCommission=res.result.sumCommission ;
+          this.sumCommissionPaied =res.result.sumCommissionPaied ;
           this.paymentAmount = +res.result.totalPayment
           this.totalProfie=res.result.totalProfit ;
           this.total_price_without_profite = res.result.total_price_without_profite ;
           console.log("sumBalance ,sumCommission , totalProfie = ",res );
-
+          // calc sumDrawing , sumCapital
           this._OwnerService.getCapitalAndOwnerDrawing().subscribe({
             next : (res)=>{
               this.sumDrawing=res.result.drowingSum ;
               this.sumCapital=res.result.investSum ;
               console.log(res);
+              // calc cash
               this._TransactionsService.getExpensesSum().subscribe({
                 next : (res)=>{
                   console.log( 'expensesSum ',res.expensesSum);
                   this.expenses=res.expensesSum ;
                   // calc cash
-                  this.cash = (this.paymentAmount + this.sumDeposit + this.sumCapital) - ( this.sumDrawing + this.expenses + this.total_price_without_profite   +this.sumBalanceSupplier + this.sumBanksBalance  )
+                  this.cash = (this.paymentAmount + this.sumDeposit + this.sumCapital) - ( this.sumDrawing + this.expenses + this.total_price_without_profite   +this.sumBalanceSupplier + this.sumBanksBalance + this.sumCommissionPaied ) ;
                 },
                 error :(err)=>{
                   console.log(err);

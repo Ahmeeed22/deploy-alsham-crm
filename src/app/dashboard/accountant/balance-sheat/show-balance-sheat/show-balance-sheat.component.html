@@ -71,10 +71,10 @@
                     <td>
                         <table class="table-borderless w-100">
                             <tr class="d-flex justify-content-between ">
-                                <td style="padding-left: 0px !important;" >{{totalProfie - expenses | currency: ' AED '}}</td>
+                                <td style="padding-left: 0px !important;" >{{totalProfie - expenses -sumCommissionPaied -sumCommission | currency: ' AED '}}</td>
                                 <div class="bg-dark font-weight-bolder text-info">
                                     <td style="border-right: 2px solid #fff;">Total</td>
-                                    <td>{{totalProfie-expenses+sumCapital - sumDrawing |currency : ' AED '}}</td>
+                                    <td>{{totalProfie-expenses-sumCommissionPaied -sumCommission+sumCapital - sumDrawing |currency : ' AED '}}</td>
                                 </div>
                             </tr>
                         </table>
@@ -91,14 +91,14 @@
                             </tr>
                             <tr class="">
                                 <td>{{assets + sumBalance + cash |currency:' AED '}}</td>
-                                <td>{{sumCommission + sumDeposit + totalProfie-expenses+sumCapital - sumDrawing | currency : ' AED '}} </td>
+                                <td>{{sumCommission + sumDeposit + totalProfie-expenses-sumCommissionPaied -sumCommission+sumCapital - sumDrawing | currency : ' AED '}} </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <th scope="col" class="text-center bg-dark text-white" colspan="2">Correct Mistakes</th>
                 <tr>
-                    <td scope="row" colspan="2" class="text-center font-weight-bolder" style="font-size: 24px;">{{(assets +cash  + sumBalance)-(sumCommission + sumDeposit + totalProfie-expenses+sumCapital - sumDrawing) | currency : ' AED '}}</td>
+                    <td scope="row" colspan="2" class="text-center font-weight-bolder" style="font-size: 24px;">{{(assets +cash  + sumBalance)-(sumCommission + sumDeposit + totalProfie-expenses-sumCommissionPaied -sumCommission+sumCapital - sumDrawing) | currency : ' AED '}}</td>
                 </tr>
             </tbody>
         </table>
