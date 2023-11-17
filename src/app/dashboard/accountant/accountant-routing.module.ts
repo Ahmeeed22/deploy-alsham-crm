@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DebtorComponent } from './debtor/debtor.component';
 
 const routes: Routes = [
   {
@@ -7,10 +8,10 @@ const routes: Routes = [
     redirectTo:'balanceSheat',
     pathMatch : 'full'
   },
-  // {
-  //   path : "home" ,
-  //   component : HomeDashboardComponent
-  // },
+  {
+    path : "deptors" ,
+    component : DebtorComponent
+  },
   {
     path : 'balanceSheat',
     loadChildren : ()=> import('./balance-sheat/balance-sheat.module').then(m => m.BalanceSheatModule)

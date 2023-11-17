@@ -112,6 +112,8 @@ export class ShowBalanceSheatComponent  {
     // calc sum  total_price_without_profite , totalProfie 
       this._AuthService.getSumBalance().subscribe({
         next : (res)=>{
+          console.log(res);
+          
           this.sumBalance=res.result.sumBalanceCustomers ;
           this.sumCommission=res.result.sumCommission ;
           this.sumCommissionPaied =res.result.sumCommissionPaied ;

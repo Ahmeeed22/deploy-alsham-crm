@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row my-3 ">
+        <div class="col-12">
+            <h2 class="text-info ">Deptor</h2>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-hover" style="min-width: 670px;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center" >Customer Name</th>
+                    <th scope="col" class="text-center" >Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let deptor of listDeptors , let i=index" >
+                    <ng-container *ngIf="deptor.total_balance !== 0">
+                    <td scope="row" class="w-50">{{deptor.customer.name}}</td>
+                    <td>{{deptor.total_balance}}</td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

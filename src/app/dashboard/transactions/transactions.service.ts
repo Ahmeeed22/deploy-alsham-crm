@@ -46,4 +46,8 @@ export class TransactionsService {
     return this.http.get(`${environment.baseApi}getExpensesSum`)
    }
 
+   getSumBalance():Observable<any>{
+    return this.http.get(`${environment.baseApi}sumBalance`)
+   }
+
 }
