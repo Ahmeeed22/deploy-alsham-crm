@@ -21,8 +21,8 @@ export class DebtorComponent implements OnInit {
   getSumBalance(){
     this._TransactionsService.getSumBalance().subscribe({
       next :(res)=>{
-        console.log(res.result.sumBalance);
-        this.listDeptors=res.result.sumBalance ;
+        console.log(res);
+        this.listDeptors=res?.result?.sumBalance ;
         
       },
       error :(err)=>{
