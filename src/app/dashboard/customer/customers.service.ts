@@ -16,7 +16,7 @@ export class CustomersService {
 
   getAllCustomersSearch(filter?:any):Observable<any>{
      let params = new HttpParams();
-    if (filter?.name||filter?.active==0 || filter?.active==1) {
+    if (filter?.name||filter?.active==0 || filter?.active==1 || filter?.deposite) {
       Object.entries(filter).forEach(([key,value]:any)=>{
         if (value ) {
           params = params.append(key,value)

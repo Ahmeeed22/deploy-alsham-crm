@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row my-3 ">
         <div class="col-12 header-container">
-            <h2 class="text-info ">Deptors</h2>
-            <!-- <p class="font-italic font-weight-bold">Total Deposits: {{ totalBalance | currency:' AED ' }}</p> -->
+            <h2 class="text-info ">Creditors</h2>
+            <!-- <p class="font-italic font-weight-bold">Total Deposits: {{ totalDeposite | currency:' AED ' }}</p> -->
         </div>
     </div>
     <div class="row">
@@ -14,11 +14,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="text-center" *ngFor="let deptor of listDeptors , let i=index" >
-                    <ng-container *ngIf="deptor.total_balance !== 0">
-                    <td scope="row" class="w-50">{{deptor.name}}</td>
-                    <td>{{deptor.total_balance | currency:' AED '}}</td>
-                    </ng-container>
+                <tr class="text-center" *ngFor="let creditor of listCreditors , let i=index" >
+                    <td scope="row" class="w-50">{{creditor.name}}</td>
+                    <td>{{creditor.deposite | currency:' AED '}}</td>
                 </tr>
             </tbody>
         </table>

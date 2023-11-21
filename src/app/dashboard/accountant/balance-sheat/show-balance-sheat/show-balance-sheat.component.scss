@@ -96,3 +96,17 @@ table  {
     padding: 0.15rem;
     vertical-align: top;
 }
+.header-container {
+    padding: 15px; /* Adjust padding as needed */
+    color: #333; /* Set text color to your preferred color */
+    // text-align: center;
+    border-bottom: 1px solid #ccc; /* Optional: Add a bottom border for separation */
+  }
+  
+  .header-container h2 {
+    margin: 0;
+  }
+  
+  .header-container p {
+    margin: 5px 0;
+  }

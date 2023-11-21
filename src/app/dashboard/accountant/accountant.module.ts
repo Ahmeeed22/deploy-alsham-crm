@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { AccountantRoutingModule } from './accountant-routing.module';
 import { DebtorComponent } from './debtor/debtor.component';
+import { CreditorComponent } from './creditor/creditor.component';
 
 
 @NgModule({
   declarations: [
-    DebtorComponent
+    DebtorComponent,
+    CreditorComponent
   ],
   imports: [
     CommonModule,

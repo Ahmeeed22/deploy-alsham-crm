@@ -2,11 +2,13 @@
   <!--start of side bar -->
   <mat-drawer mode="side" [opened]="sideBarOpen" class="layouting h-100">
     <mat-nav-list class="d-flex justify-content-between pt-4  h-100" style="flex-direction: column;">
-      <div class="firstPart">
-        <div class="logo py-1  " style="background-color: #000;">
+      <!-- <div class=""> -->
+        <div class="logo" style="background-color: #000; height: 18%;">
           <img src="https://ik.imagekit.io/2cvha6t2l9/bllogo.PNG?ik-sdk-version=javascript-1.4.3&updatedAt=1678092036169"
             alt="Company Logo" />
         </div>
+      <!-- </div> -->
+      <div class="firstPart overflow-auto " style="height:  57% ;">
         <mat-divider></mat-divider>
         <a mat-list-item routerLinkActive="list-item-active" routerLink="/main/home">
           <i class="fa-solid fa-house   fa-lg pr-4"></i> Home
@@ -34,8 +36,12 @@
             <i class="fa-solid fa-balance-scale  fa-xl pr-4" ></i>Balance Sheet
           </a>
           <a mat-list-item routerLinkActive="list-item-active" routerLink="/main/accountant/deptors">
-            <i class="fas fa-money-bill-wave  fa-xl pr-4"></i>
+            <i class="fas fa-file-invoice-dollar  fa-xl pr-4"></i>
             Deptors
+          </a>
+          <a mat-list-item routerLinkActive="list-item-active" routerLink="/main/accountant/creditors">
+            <i class="fas fa-credit-card  fa-xl pr-4"></i>
+            Creditors
           </a>
           <!-- Add more sub-menu items as needed -->
         </div>
@@ -45,7 +51,7 @@
           <i class="fa-regular fa-bell  fa-xl pr-4"></i>
           Reminder </a>
       </div>
-      <div class="ramadan ">
+      <div class="ramadan  h-25 " style="bottom: 0;">
         <img src="https://ik.imagekit.io/2cvha6t2l9/mohamed.PNG?updatedAt=1695967598893" 
           alt="" class="hiA " id="ramd" srcset="" >
       </div>
