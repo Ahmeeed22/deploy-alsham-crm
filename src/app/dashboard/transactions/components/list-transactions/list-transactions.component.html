@@ -102,6 +102,7 @@
 
             <tr class="text-center text-white text-light">
               <th>Index</th>
+              <th>Check</th>
               <th *ngIf="colDisplay.empName">Employee Name</th>
               <th *ngIf="colDisplay.cusName">Customer Name</th>
               <th *ngIf="colDisplay.sponsored">Sponsored</th>
@@ -120,6 +121,7 @@
           <tfoot class="text-center">
             <tr>
               <th>Sum</th>
+              <th>--</th>
               <th *ngIf="colDisplay.empName">--</th>
               <th *ngIf="colDisplay.cusName">--</th>
               <th *ngIf="colDisplay.sponsored">--</th>
@@ -139,9 +141,25 @@
           <tbody>
             <tr *ngFor="let transaction of dataSource  ;let index=index" class="text-center hover"
               style="text-align: center;">
-              <td style="text-align: center;">{{((1+index)+(filteration.limit*(filteration.offset-1))+filteration.limit)
-                }}<span class="text-info font-weight-bolder">{{ role == 3 ?' -- '+ ( 7200-transaction.id + 271) : ''
-                  }}</span></td>
+              <td style="text-align: center;">
+              <span>
+                {{((1+index)+(filteration.limit*(filteration.offset-1))+filteration.limit)
+                }}
+              </span>
+              </td>
+              <td>
+                <div class="p-2">
+                  <!-- {{ role == 3 ?' -- '+ ( 7200-transaction.id + 271) : ''
+                  }} -->
+                  <!-- <div class="custom-control custom-checkbox pt-2"> -->
+                    <input type="checkbox"
+                      class="custom-control-input pl-3" [id]="transaction.id" [checked]="transaction.isCheck "
+                      (change)="onCheckedboxChange($event,transaction.id,transaction.isCheck )">
+                    <label class="custom-control-label"
+                      [for]="transaction.id">{{transaction.isCheck ? 'Checked': 'UnCheck'}} </label>
+                  <!-- </div> -->
+                </div>
+              </td>
               <td style="text-align: center;" *ngIf="colDisplay.empName">{{transaction.user.name}}</td>
               <td style="text-align: center;" *ngIf="colDisplay.cusName">{{transaction.customer.name}}</td>
               <td style="text-align: center;" *ngIf="colDisplay.sponsored">{{transaction.sponsoredName||'--'}}</td>

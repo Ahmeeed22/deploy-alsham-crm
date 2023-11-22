@@ -377,4 +377,36 @@ onCheckboxChange(event:any,id:any,commission:any,isDone:boolean){
  
 }
 
+onCheckedboxChange(event:any,id:any,isCheck:boolean){
+  if ( !isCheck) { 
+
+
+
+    const dialogRef = this.dialog.open(ComfirmationComponent, {
+      width: '750px',
+      disableClose:true,
+      data : {message :"Are You Sure to Check This Transaction ? "}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result!=='no') {
+        this._TransactionsService.updateTransaction(id  ,{isCheck:event.target.checked ,com:true}).subscribe({
+          next: res=>{
+            console.log(res);
+            this.toaster.success("success Check This Transaction","success") ;
+            this.getAllTransactions();
+          }
+        })
+      }else{
+        this.toaster.info('Transaction not Check ' , "Info") ;
+        event.target.checked=false ;
+      }
+    });
+
+
+  }else{
+    this.toaster.info("Checked Previous" , "info")
+  }
+}
+
 }
