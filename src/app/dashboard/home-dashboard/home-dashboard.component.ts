@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../transactions/transactions.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DebtorComponent } from '../accountant/debtor/debtor.component';
 
 @Component({
   selector: 'app-home-dashboard',
@@ -8,6 +10,7 @@ import { TransactionsService } from '../transactions/transactions.service';
 })
 export class HomeDashboardComponent implements OnInit {
   detailsProfite: any = {}
+  totalBalance:any ;
   count: number = 0;
   filteration: any
   detailsProfiteMonthly: any = {}
@@ -17,7 +20,8 @@ export class HomeDashboardComponent implements OnInit {
   dailySummary: any;
   monthlySummary: any;
   constructor(
-    private _TransactionsService: TransactionsService,
+    private _TransactionsService: TransactionsService
+    , public dialog: MatDialog
   ){
     var start = new Date();
     start.setUTCHours(0, 0, 0, 0);
@@ -70,12 +74,44 @@ export class HomeDashboardComponent implements OnInit {
     this._TransactionsService.getSummary(this.filteration).subscribe({
       next: res => {
         console.log("monthly", res);
-        this.monthlySummary = res
+        this.monthlySummary = res ;
+        this.getSumBalance()
       },
       error: err => {
         console.log(err);
       }
     })
   }
+
+  getSumBalance(){
+    this._TransactionsService.getSumBalance().subscribe({
+      next :(res)=>{
+        console.log(res);
+        let listDeptors=res?.result?.sumBalance ;
+        
+        this.totalBalance=listDeptors.reduce((sum=0,customerBalance:any)=>  sum + customerBalance.total_balance ,0) ;
+        console.log(listDeptors , this.totalBalance);
+        // this.toaster.success("success get Deptors","success") ;
+        
+      },
+      error :(err)=>{ 
+        console.log(err);
+        
+      }
+    })
+  }
+
+  showAllDeptors() {
+    const dialogRef = this.dialog.open(DebtorComponent, {
+      width: "60%",
+      disableClose: true ,
+      data: true,
+      maxHeight: '90vh',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // this.getAllTransactionAccount()
+    });
+  }
+
 
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AccountantRoutingModule } from './accountant-routing.module';
 import { DebtorComponent } from './debtor/debtor.component';
 import { CreditorComponent } from './creditor/creditor.component';
+import { MaterialModule } from 'src/app/material/material.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CreditorComponent } from './creditor/creditor.component';
   ],
   imports: [
     CommonModule,
-    AccountantRoutingModule
+    AccountantRoutingModule,
+    MaterialModule,
   ]
 })
 export class AccountantModule { }

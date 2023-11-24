@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Inject} from '@angular/core';
 import { TransactionsService } from '../../transactions/transactions.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-debtor',
@@ -14,11 +16,16 @@ export class DebtorComponent implements OnInit {
   constructor(
     private _TransactionsService:TransactionsService
     ,private toaster:ToastrService
+    ,public dialog: MatDialogRef<DebtorComponent> , 
+    public dialogpublic: MatDialog ,
+    @Inject(MAT_DIALOG_DATA) public data:any,
   ) { 
     this.getSumBalance() ;
   }
 
   ngOnInit(): void {
+    console.log("data = ",this.data);
+    
   }
 
   getSumBalance(){

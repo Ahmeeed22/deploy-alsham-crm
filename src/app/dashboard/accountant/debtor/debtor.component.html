@@ -1,7 +1,12 @@
 <div class="container">
     <div class="row my-3 ">
         <div class="col-12 header-container">
-            <h2 class="text-info ">Deptors</h2>
+            <div class="header d-flex justify-content-between">
+                <h2 class="text-info ">Deptors</h2>
+                <button *ngIf="data" mat-flat-button class="text-danger">
+                    <mat-icon (click)="dialog.close(true)">close</mat-icon>
+                </button>
+            </div>
             <!-- <p class="font-italic font-weight-bold">Total Deposits: {{ totalBalance | currency:' AED ' }}</p> -->
             <p class="font-italic font-weight-bold">Total Deposits: {{ totalBalance | currency:' AED ' }}</p>
         </div>

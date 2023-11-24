@@ -22,7 +22,7 @@ export class AddComponent implements OnInit {
   formValues:any ;
   minDate:any;
   @ViewChild('type') type !: DdlSearchableComponent;
-  statusObj : Item= { staticArray:[{id:'supply',name:' Supply'},{id:'expenses',name:'Expenses'}], placeholder: 'الحالة ', placeholderEn: 'Type', required: true, searachable: false, multiSelect: false} ;
+  statusObj : Item= { staticArray:[{id:'expenses',name:'Expenses'}], placeholder: 'الحالة ', placeholderEn: 'Type', required: true, searachable: false, multiSelect: false , oldSelectedItems :{id:'expenses',name:'Expenses'}} ;
   typeSupplyed :boolean=false ;
   constructor(
     private fb:FormBuilder ,

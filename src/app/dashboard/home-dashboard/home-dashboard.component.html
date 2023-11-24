@@ -143,11 +143,11 @@
         </div>
         <div class="col-md-6 col-12 col-xl-4">
             <div class="card comp-card ">
-                <div class="card-body">
+                <div class="card-body" (click)="showAllDeptors()">
                     <div class="row align-items-center">
                         <div class="col">
                             <h6 class="m-b-25">Total Balance</h6>
-                            <h3 class="f-w-700 text-c-blue">{{monthlySummary?.summary?.balanceDue||0 | currency:' AED '}}</h3>
+                            <h3 class="f-w-700 text-c-blue">{{totalBalance||0 | currency:' AED '}}</h3>
                             <p class="m-b-0">{{dateToday |date}}</p>
                         </div>
                         <div class="col-auto">
