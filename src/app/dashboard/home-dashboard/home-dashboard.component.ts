@@ -19,6 +19,7 @@ export class HomeDashboardComponent implements OnInit {
   dateToday = new Date();
   dailySummary: any;
   monthlySummary: any;
+
   constructor(
     private _TransactionsService: TransactionsService
     , public dialog: MatDialog
@@ -39,6 +40,7 @@ export class HomeDashboardComponent implements OnInit {
   ngOnInit(): void {
     // getting daily and monthly summary 
     this.getAllTransactions();
+    this.gettingCash() ;
   }
 
   getAllTransactions() {
@@ -113,5 +115,17 @@ export class HomeDashboardComponent implements OnInit {
     });
   }
 
+ gettingCash() {
+  this._TransactionsService.getCash().subscribe({
+    next : (res)=>{
+      console.log(res);
+      this.amountCash = res.result.cash ;
+    },
+    error : (err)=>{
+      console.log(err);
+      
+    }
+  })
+ } 
 
 }

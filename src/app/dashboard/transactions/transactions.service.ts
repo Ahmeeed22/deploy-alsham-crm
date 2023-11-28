@@ -50,4 +50,8 @@ export class TransactionsService {
     return this.http.get(`${environment.baseApi}sumBalance`)
    }
 
+   getCash():Observable<any>{
+    return this.http.get(`${environment.baseApi}cash`)
+   }
+
 }

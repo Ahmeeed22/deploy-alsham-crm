@@ -134,6 +134,8 @@ export class ShowBalanceSheatComponent  {
                   this.expenses=res.expensesSum ;
                   // calc cash
                   this.cash = (this.paymentAmount + this.sumDeposit + this.sumCapital) - ( this.sumDrawing + this.expenses + this.total_price_without_profite   +this.sumBalanceSupplier + this.sumBanksBalance + this.sumCommissionPaied ) ;
+                  console.log(`( ${this.paymentAmount} + ${this.sumDeposit} + ${this.sumCapital}) - ( ${this.sumDrawing} + ${this.expenses} + ${this.total_price_without_profite}   +${this.sumBalanceSupplier} + ${this.sumBanksBalance} + ${this.sumCommissionPaied} ) `);
+                  
                 },
                 error :(err)=>{
                   console.log(err);
