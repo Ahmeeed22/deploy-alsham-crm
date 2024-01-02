@@ -34,6 +34,8 @@ export class CustomersService {
   }
 
   updateCustomer(id:number,data:any):Observable<any>{
+    console.log('from service customer ',data);
+    
     return this.http.put(`${environment.baseApi}updateCustomer/${id}`,data)
   }  
 

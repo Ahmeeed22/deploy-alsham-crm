@@ -23,7 +23,7 @@ export class ShowBalanceSheatComponent  {
   totalProfie :any=0 ;
   assets :any=0 ;
   expenses :any=0 ;
-  cash :any=0 ;
+  // cash :any=0 ;
   paymentAmount :any= 0;
   sumBanksBalance :any= 0;
   sumBalanceSupplier :any= 0;
@@ -40,15 +40,15 @@ export class ShowBalanceSheatComponent  {
   }
 
   calculateCash() {
-    this.cash =
-      this.paymentAmount +
-      this.sumDeposit +
-      this.sumCapital -
-      this.sumDrawing -
-      this.expenses -
-      this.total_price_without_profite -
-      this.sumBalanceSupplier -
-      this.sumBanksBalance;
+    // this.cash =
+    //   this.paymentAmount +
+    //   this.sumDeposit +
+    //   this.sumCapital -
+    //   this.sumDrawing -
+    //   this.expenses -
+    //   this.total_price_without_profite -
+    //   this.sumBalanceSupplier -
+    //   this.sumBanksBalance;
   }
 
 
@@ -97,6 +97,7 @@ export class ShowBalanceSheatComponent  {
     return this._AuthService.getSumDeposit().pipe(
       map((res) => {
         this.sumDeposit=res.result.sumDeposite ;
+        this.sumBalance = res.result.sumBalance ;
         return this.sumDeposit;
       }),
       catchError((err) => {
@@ -113,8 +114,9 @@ export class ShowBalanceSheatComponent  {
       this._AuthService.getSumBalance().subscribe({
         next : (res)=>{
           console.log(res);
-          
-          this.sumBalance=res.result.sumBalanceCustomers ;
+          // get cutomers balance ////////////////////////////////////////
+          // this.sumBalance=res.result.sumBalanceCustomers ;
+
           this.sumCommission=res.result.sumCommission ;
           this.sumCommissionPaied =res.result.sumCommissionPaied ;
           this.paymentAmount = +res.result.totalPayment
@@ -133,7 +135,7 @@ export class ShowBalanceSheatComponent  {
                   console.log( 'expensesSum ',res.expensesSum);
                   this.expenses=res.expensesSum ;
                   // calc cash
-                  this.cash = (this.paymentAmount + this.sumDeposit + this.sumCapital) - ( this.sumDrawing + this.expenses + this.total_price_without_profite   +this.sumBalanceSupplier + this.sumBanksBalance + this.sumCommissionPaied ) ;
+                  // this.cash = (this.paymentAmount + this.sumDeposit + this.sumCapital) - ( this.sumDrawing + this.expenses + this.total_price_without_profite   +this.sumBalanceSupplier + this.sumBanksBalance + this.sumCommissionPaied ) ;
                   console.log(`( ${this.paymentAmount} + ${this.sumDeposit} + ${this.sumCapital}) - ( ${this.sumDrawing} + ${this.expenses} + ${this.total_price_without_profite}   +${this.sumBalanceSupplier} + ${this.sumBanksBalance} + ${this.sumCommissionPaied} ) `);
                   
                 },

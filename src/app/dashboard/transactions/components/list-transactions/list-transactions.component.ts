@@ -201,6 +201,7 @@ export class ListTransactionsComponent implements OnInit {
         width:"60%",
         disableClose:true,
         data:ele,
+        maxHeight: '90vh',
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -216,6 +217,7 @@ export class ListTransactionsComponent implements OnInit {
       width:"60%",
       disableClose:true,
       data:ele,
+      maxHeight: '90vh',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -227,7 +229,8 @@ export class ListTransactionsComponent implements OnInit {
     const dialogRef = this.dialog.open(ComfirmationComponent, {
       width: '750px',
       disableClose:true,
-      data : {message :"Are You Sure to Delete ? "}
+      data : {message :"Are You Sure to Delete ? "} ,
+      maxHeight: '90vh',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -296,7 +299,8 @@ export class ListTransactionsComponent implements OnInit {
   addTask(): void {
     const dialogRef = this.dialog.open(AddTransactionComponent, {
       width:"60%",
-      disableClose:true
+      disableClose:true ,
+      maxHeight: '90vh',
     });
     dialogRef.afterClosed().subscribe(result => {
       this.getAllTransactions()

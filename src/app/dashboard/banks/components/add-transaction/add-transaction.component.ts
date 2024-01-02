@@ -14,10 +14,11 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class AddTransactionComponent implements OnInit {
 
   formAdd =new FormGroup({
-    accountId: new FormControl('',[Validators.required]) ,
+    accountIdDebitor: new FormControl('',[Validators.required]) ,
+    accountIdCreditor: new FormControl('',[Validators.required]) ,
     amount : new FormControl('',[Validators.required]) ,
     DESC : new FormControl('') ,
-    type : new FormControl('',[Validators.required])
+    // type : new FormControl('',[Validators.required])
   }) ;
   banks : any[]=[] ;
 
@@ -45,6 +46,8 @@ export class AddTransactionComponent implements OnInit {
   save(){
     this.formAdd?.markAllAsTouched() ;
     if (this.formAdd?.valid) {
+      console.log(this.formAdd.value);
+      
       this._BanksService.addBankStatementAccount(this.formAdd.value).subscribe({
         next : (res)=>{
           this.toaster.success("bank statement added success and update bank balance success","Success") ;

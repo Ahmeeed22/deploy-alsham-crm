@@ -98,6 +98,7 @@
           </div>
         </div>
         <table class="table table-hover ">
+          
           <thead>
 
             <tr class="text-center text-white text-light">
@@ -118,7 +119,7 @@
               <th *ngIf="colDisplay.acts" colspan="1">Actions</th>
             </tr>
           </thead>
-          <tfoot class="text-center">
+          <!-- <tfoot class="text-center">
             <tr>
               <th>Sum</th>
               <th>--</th>
@@ -137,8 +138,45 @@
               <th *ngIf="colDisplay.date">--</th>
               <th *ngIf="colDisplay.acts" colspan="1">--</th>
             </tr>
-          </tfoot>
+          </tfoot> -->
           <tbody>
+            <tr class="text-center">
+              <th></th>
+              <th></th>
+              <th *ngIf="colDisplay.empName"></th>
+              <th *ngIf="colDisplay.cusName"></th>
+              <th *ngIf="colDisplay.sponsored"></th>
+              <th *ngIf="colDisplay.serName"></th>
+              <th *ngIf="colDisplay.qu" class=" sumInfo"></th>
+              <th *ngIf="colDisplay.ppu"></th>
+              <th *ngIf="colDisplay.tp" class=" sumInfo"></th>
+              <th colspan="2" *ngIf="colDisplay.pm" class="sumInfo bg-info">{{sumCols?.paymentAmount - sumCols?.balanceDue}}</th>
+              <!-- <th *ngIf="colDisplay.bd" class="table-info sumInfo">{{sumCols?.balanceDue}}</th> -->
+              <th *ngIf="colDisplay.p" class=" sumInfo"></th>
+              <th *ngIf="colDisplay.p" class=" sumInfo">
+              </th>
+              <th *ngIf="colDisplay.date"></th>
+              <th *ngIf="colDisplay.acts" colspan="1"></th>
+            </tr>
+            <tr class="text-center">
+              <th>Sum</th>
+              <th>--</th>
+              <th *ngIf="colDisplay.empName">--</th>
+              <th *ngIf="colDisplay.cusName">--</th>
+              <th *ngIf="colDisplay.sponsored">--</th>
+              <th *ngIf="colDisplay.serName">--</th>
+              <th *ngIf="colDisplay.qu" class="table-info sumInfo">{{sumCols?.quantity}}</th>
+              <th *ngIf="colDisplay.ppu">--</th>
+              <th *ngIf="colDisplay.tp" class="table-info sumInfo">{{sumCols?.total_price}}</th>
+              <th *ngIf="colDisplay.pm" class="table-info sumInfo">{{sumCols?.paymentAmount}}</th>
+              <th *ngIf="colDisplay.bd" class="table-info sumInfo">{{sumCols?.balanceDue}}</th>
+              <th *ngIf="colDisplay.p" class="table-info sumInfo">{{sumCols?.total_profite}}</th>
+              <th *ngIf="colDisplay.p" class="table-info sumInfo">{{sumCommissionUNpaid +' / '+ sumCols?.SumCommission}}
+              </th>
+              <th *ngIf="colDisplay.date">--</th>
+              <th *ngIf="colDisplay.acts" colspan="1">--</th>
+            </tr>
+
             <tr *ngFor="let transaction of dataSource  ;let index=index" class="text-center hover"
               style="text-align: center;">
               <td style="text-align: center;">
@@ -153,10 +191,10 @@
                   }} -->
                   <!-- <div class="custom-control custom-checkbox pt-2"> -->
                     <input type="checkbox"
-                      class="custom-control-input pl-3" [id]="transaction.id" [checked]="transaction.isCheck "
+                      class="custom-control-input pl-3" [id]="transaction.id+'checkTransaction'" [checked]="transaction.isCheck "
                       (change)="onCheckedboxChange($event,transaction.id,transaction.isCheck )">
                     <label class="custom-control-label"
-                      [for]="transaction.id">{{transaction.isCheck ? 'Checked': 'UnCheck'}} </label>
+                      [for]="transaction.id+'checkTransaction'">{{transaction.isCheck ? 'Checked': 'UnCheck'}} </label>
                   <!-- </div> -->
                 </div>
               </td>
