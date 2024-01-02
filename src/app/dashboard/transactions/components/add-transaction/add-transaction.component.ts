@@ -30,6 +30,7 @@ export class AddTransactionComponent implements OnInit {
   customerDeposite: any;
   customerName: any;
   customerSelected: any;
+  role:any ;
   // to manage normal transaction and deposite 
   public isTransaction: boolean = true;
   // to manage type of normal transaction is visa or no 
@@ -51,6 +52,12 @@ export class AddTransactionComponent implements OnInit {
     this.getCustomers()
     this.getAllSuppliers();
     this.getAllBanksAccounts();
+
+    this._AuthService.currentUser.subscribe(res=> {
+      var user:any=this._AuthService.currentUser.getValue()
+      this.role=user.role
+      
+    }) 
   }
 
   ngOnInit(): void {

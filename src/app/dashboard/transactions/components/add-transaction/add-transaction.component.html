@@ -12,14 +12,14 @@
      {{customerName?customerName:'Customer'}} Deposite = {{customerDeposite?customerDeposite:0}}
     </span> -->
   <form [formGroup]="newTransactionForm" >
-        <div class="container mt-4" *ngIf="!data?.id">
+        <div class="container mt-4" *ngIf="!data?.id"> 
             <p>Please select your type Transaction:</p>
-             <input type="radio" id="html" class="ml-3" name="fav_language" value="transaction" checked (change)="onCheckboxChange($event)">
-             <label for="html">Transaction</label>
-             <input type="radio" id="css" class="ml-3" name="fav_language" value="visa" (change)="onCheckboxChange($event)">
-             <label for="css">Visa</label>
-             <input type="radio" id="css" class="ml-3" name="fav_language" value="deposit" (change)="onCheckboxChange($event)">
-             <label for="css">Deposit</label>
+             <input [disabled]="role!==3" type="radio" id="html" class="ml-3" name="fav_language" value="transaction" checked (change)="onCheckboxChange($event)">
+             <label  for="html">Transaction</label>
+             <input *ngIf="role ==3" type="radio" id="css" class="ml-3" name="fav_language" value="visa" (change)="onCheckboxChange($event)">
+             <label *ngIf="role ==3" for="css">Visa</label>
+             <input *ngIf="role ==3" type="radio" id="css" class="ml-3" name="fav_language" value="deposit" (change)="onCheckboxChange($event)">
+             <label *ngIf="role ==3" for="css">Deposit</label>
         </div>
         <div class="row mt-1">
                 <div class="col-md-12 my-2" >

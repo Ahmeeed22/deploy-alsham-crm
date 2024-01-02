@@ -22,6 +22,7 @@ export class AddCustomerComponent implements OnInit {
   formValues:any ;
   increaseValue: number=0; // Variable for Increase Deposite By
   decreaseValue: number=0; // Variable for Decrease Deposite By
+  role:any ;
 
   constructor(
     private _CustomersService:CustomersService,
@@ -35,7 +36,12 @@ export class AddCustomerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data:any
   ) {
     this.getStatus();
-    this.createForm()
+    this.createForm() ;
+    this._AuthService.currentUser.subscribe(res=> {
+      var user:any=this._AuthService.currentUser.getValue()
+      this.role=user.role
+      
+    }) 
    }
 
   ngOnInit(): void {
