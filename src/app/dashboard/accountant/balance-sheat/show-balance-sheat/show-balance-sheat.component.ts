@@ -96,6 +96,8 @@ export class ShowBalanceSheatComponent  {
   getSumDeposites() {
     return this._AuthService.getSumDeposit().pipe(
       map((res) => {
+        console.log("resssssss ",res);
+        
         this.sumDeposit=res.result.sumDeposite ;
         this.sumBalance = res.result.sumBalance ;
         return this.sumDeposit;

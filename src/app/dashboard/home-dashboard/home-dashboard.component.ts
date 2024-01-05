@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../transactions/transactions.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DebtorComponent } from '../accountant/debtor/debtor.component';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import {  catchError, forkJoin, map, of } from 'rxjs';
+
 
 @Component({
   selector: 'app-home-dashboard',
@@ -19,10 +22,14 @@ export class HomeDashboardComponent implements OnInit {
   dateToday = new Date();
   dailySummary: any;
   monthlySummary: any;
+  sumBalance :any ;
+  sumDeposit :any ;
+  listDepts = [] ;
 
   constructor(
     private _TransactionsService: TransactionsService
-    , public dialog: MatDialog
+    , public dialog: MatDialog ,
+    private _AuthService:AuthService ,
   ){
     var start = new Date();
     start.setUTCHours(0, 0, 0, 0);
@@ -127,5 +134,22 @@ export class HomeDashboardComponent implements OnInit {
     }
   })
  } 
+
+ getSumDeposites() {
+  return this._AuthService.getSumDeposit().pipe(
+    map((res) => {
+      console.log("resssssss ",res);
+      
+      this.sumDeposit=res.result.sumDeposite ;
+      this.sumBalance = res.result.sumBalance ;
+      this.listDepts = res.result.listDeptors ;
+      return this.sumDeposit;
+    }),
+    catchError((err) => {
+      console.log(err);
+      return of(0); // Return an observable with a default value
+    })
+  );
+}
 
 }

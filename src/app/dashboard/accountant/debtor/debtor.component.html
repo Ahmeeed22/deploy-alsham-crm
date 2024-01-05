@@ -8,10 +8,10 @@
                 </button>
             </div>
             <!-- <p class="font-italic font-weight-bold">Total Deposits: {{ totalBalance | currency:' AED ' }}</p> -->
-            <p class="font-italic font-weight-bold">Total Deposits: {{ totalBalance | currency:' AED ' }}</p>
+            <p class="font-italic font-weight-bold">Total Depts: {{ sumBalance | currency:' AED ' }}</p>
         </div>
     </div>
-    <div class="row">
+    <div class="row" >
         <table class="table table-bordered table-hover" style="min-width: 670px;">
             <thead class="thead-dark">
                 <tr>
@@ -19,11 +19,11 @@
                     <th scope="col" class="text-center" >Amount</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="text-center" *ngFor="let deptor of listDeptors , let i=index" >
-                    <ng-container *ngIf="deptor.total_balance !== 0">
-                    <td scope="row" class="w-50">{{deptor.name}}</td>
-                    <td>{{deptor.total_balance | currency:' AED '}}</td>
+            <tbody *ngIf="listDepts.length">
+                <tr class="text-center" *ngFor="let deptor of listDepts , let i=index" >
+                    <ng-container *ngIf="deptor?.deposite!== 0">
+                    <td scope="row" class="w-50">{{deptor?.name}}</td>
+                    <td>{{deptor?.deposite | currency:' AED '}}</td>
                     </ng-container>
                 </tr>
             </tbody>
