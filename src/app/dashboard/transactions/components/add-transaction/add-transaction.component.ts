@@ -35,6 +35,9 @@ export class AddTransactionComponent implements OnInit {
   public isTransaction: boolean = true;
   // to manage type of normal transaction is visa or no 
   public isVisaChecked: any = 'transaction';
+
+  banksList:any = [] ;
+  suppliersList = [] ;
   constructor(
     private _CustomersService: CustomersService,
     private _ServicesService: ServicesService,
@@ -261,7 +264,7 @@ export class AddTransactionComponent implements OnInit {
     if (this.testChange() && this.newTransactionForm.valid) {
       let data = this.gatheringData() ? this.gatheringData() : null
       let { company_id, balanceDue, paymentAmount, sponsoredName, ...newObject } = data
-      this._TransactionsService.updateTransaction(this.data.id, { ...this.newTransactionForm.value, customer_id, service_id }).subscribe({
+      this._TransactionsService.updateTransaction(this.data.id, { ...this.newTransactionForm.value,accountId,supplierId, customer_id, service_id }).subscribe({
         next: res => {
           console.log(res);
           this.toaster.success("success update transaction", "success")
@@ -314,8 +317,12 @@ export class AddTransactionComponent implements OnInit {
     this._TransactionsService.getAllBankAccount().subscribe({
       next: (res) => {
         console.log(res);
+        this.banksList = res.result.rows ;
+        const selectedBank = this.banksList.find((bank: any,{}) => bank.id === this?.data?.accountId);
+        console.log("selectedBank " , selectedBank , this.data);
+        
         this.banksObj = {
-          staticArray: res.result.rows, placeholder: 'البنك', placeholderEn: 'Bank Account', required: this.isVisaChecked != 'visa' ? true : false, searachable: true, multiSelect: false, oldSelectedItems: this?.data?.service
+          staticArray: res.result.rows, placeholder: 'البنك', placeholderEn: 'Bank Account', required: this.isVisaChecked != 'visa' ? true : false, searachable: true, multiSelect: false, oldSelectedItems:selectedBank
         };
 
       },
@@ -327,11 +334,15 @@ export class AddTransactionComponent implements OnInit {
   }
 
   getAllSuppliers() {
+    console.log("fhbsdifbsnfo ",this?.data?.service);
+    
     this._TransactionsService.getAllsuppliers().subscribe({
       next: (res) => {
         console.log(res);
+        this.suppliersList = res.result.rows ;
+        const selectedsupplier = this.suppliersList.find((supplier: any,{}) => supplier.id === this?.data?.supplierId);
         this.suppliersObj = {
-          staticArray: res.result.rows, placeholder: 'المورد', placeholderEn: 'Supplier', required: this.isVisaChecked == 'visa' ? true : false, searachable: true, multiSelect: false, oldSelectedItems: this?.data?.service
+          staticArray: res.result.rows, placeholder: 'المورد', placeholderEn: 'Supplier', required: this.isVisaChecked == 'visa' ? true : false, searachable: true, multiSelect: false, oldSelectedItems: selectedsupplier
         };
 
       },

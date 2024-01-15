@@ -36,11 +36,12 @@
                     <app-ddl-searchable *ngIf="servicesObj" [objData]="servicesObj"
                      #services></app-ddl-searchable>
                 </div>  
-                <div class="col-md-12 my-2 "*ngIf="isVisaChecked !='visa' && !data?.id" >
+                <div class="col-md-12 my-2 "*ngIf="isVisaChecked !='visa' ||  data?.accountId" >
                     <app-ddl-searchable *ngIf="banksObj" [objData]="banksObj"
                      #banks></app-ddl-searchable>
                 </div> 
-                <div class="col-md-12 my-2 " *ngIf="isVisaChecked == 'visa' && !data?.id">
+                <!-- && !data?.id -->
+                <div class="col-md-12 my-2 " *ngIf="isVisaChecked == 'visa'  || data?.supplierId">  
                     <app-ddl-searchable *ngIf="suppliersObj" [objData]="suppliersObj"
                      #suppliers></app-ddl-searchable>
                 </div> 
