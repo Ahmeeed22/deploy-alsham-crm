@@ -301,9 +301,10 @@ export class AddTransactionComponent implements OnInit {
       }
     })
 
-    if (!hasChanges && (this?.data?.customer?.id !== this?.customers?.gettingResult()?.id || this?.data?.service.id !== this.services.gettingResult()?.id)) {
+    if (!hasChanges && (this?.data?.customer?.id !== this?.customers?.gettingResult()?.id || this?.data?.service.id !== this.services.gettingResult()?.id) || this?.data?.Supplier?.id !== this?.suppliers?.gettingResult()?.id) {
       hasChanges = true;
     }
+
     return hasChanges
   }
 
