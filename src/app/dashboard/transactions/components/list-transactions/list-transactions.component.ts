@@ -348,7 +348,7 @@ getAllSuppliers(){
 })
 }
 
-onCheckboxChange(event:any,id:any,commission:any,isDone:boolean){
+onCheckboxChange(event:any,id:any,commission:any,isDone:boolean , value :number){
   if (commission>0 && !isDone) { 
 
 
@@ -356,12 +356,14 @@ onCheckboxChange(event:any,id:any,commission:any,isDone:boolean){
     const dialogRef = this.dialog.open(ComfirmationComponent, {
       width: '750px',
       disableClose:true,
-      data : {message :"Are You Sure to Pay This Commission ? "}
+      data : {message :"Are You Sure to Pay This Commission ? " , com : true}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result!=='no') {
-        this._TransactionsService.updateTransaction(id  ,{comIsDone:event.target.checked,com:true}).subscribe({
+      console.log("ttttttttttt ",result);
+      
+      if(result?.confirm !=='no') {
+        this._TransactionsService.updateTransaction(id  ,{comIsDone:event.target.checked,com:true , value , bankIdCom : result.bankID}).subscribe({
           next: res=>{
             console.log(res);
             this.toaster.success("success pay commission","success") ;
@@ -369,6 +371,8 @@ onCheckboxChange(event:any,id:any,commission:any,isDone:boolean){
           }
         })
       }else{
+        console.log(result);
+        
         this.toaster.info('Transaction not pay commission' , "Info") ;
         event.target.checked=false ;
       }

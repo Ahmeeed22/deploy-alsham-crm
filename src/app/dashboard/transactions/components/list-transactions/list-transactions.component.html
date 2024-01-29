@@ -213,7 +213,7 @@
                 <div class="custom-control custom-checkbox pt-2">
                   <input type="checkbox" [disabled]="transaction.comIsDone || !transaction.commission"
                     class="custom-control-input" [id]="transaction.id" [checked]="transaction.comIsDone"
-                    (change)="onCheckboxChange($event,transaction.id,transaction.commission,transaction.comIsDone)">
+                    (change)="onCheckboxChange($event,transaction.id,transaction.commission,transaction.comIsDone,transaction.commission)">
                   <label class="custom-control-label"
                     [for]="transaction.id">{{transaction.comIsDone||!transaction.commission? 'Paid': 'UnPaid'}} </label>
                 </div>

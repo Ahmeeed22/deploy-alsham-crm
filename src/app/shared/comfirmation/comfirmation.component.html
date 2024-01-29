@@ -3,6 +3,14 @@
         <h2 class="text-center">{{data?.message? data?.message:'Are You Sure That You Want To Discard Your Changes ?'}} </h2>
     </header>
 
+    <body class="py-5" *ngIf="comm">
+        <div class="col-md-12 my-2 " >
+            <app-ddl-searchable *ngIf="banksObj" [objData]="banksObj"
+             #banks></app-ddl-searchable>
+        </div> 
+
+    </body>
+
     <footer class="mt-5">
         <div class="d-flex justify-content-center align-items-center">
             <button mat-flat-button class="btn btn-success py-1 px-5 mx-2" (click)="confirm()" >Yes</button>
